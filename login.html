@@ -55,7 +55,8 @@
     </section>
 
     <div class="container" role="region" aria-label="Login form">
-      <form id="loginForm" novalidate>
+      <div id="message" class="form-message" aria-live="polite"></div>
+      <form id="loginForm" action="handlers/login.php" method="post" novalidate>
         <div class="form-grid">
           <div class="form-group full-width">
             <label for="loginEmail">Email Address</label>
@@ -98,38 +99,37 @@
   <script src="script.js"></script>
   <script>
     (function(){
+      // Display messages from query string (e.g., ?error=... or ?signup=success)
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var msgEl = document.getElementById('message');
+        if (msgEl) {
+          if (params.has('error')) {
+            msgEl.textContent = decodeURIComponent(params.get('error'));
+            msgEl.style.color = '#b00020';
+          } else if (params.get('signup') === 'success') {
+            msgEl.textContent = 'Signup successful — you can now sign in.';
+            msgEl.style.color = '#0b6ef0';
+          }
+        }
+      } catch (e) {}
+
       var form = document.getElementById('loginForm');
       if (!form) return;
       var email = document.getElementById('loginEmail');
       var password = document.getElementById('loginPassword');
       function setErr(id, msg){ var el = document.getElementById(id); if (el) el.textContent = msg || ''; }
       form.addEventListener('submit', function(e){
-        e.preventDefault();
-        var ok = true;
+        // keep client-side validation but allow real submit to server
         setErr('err-loginEmail'); setErr('err-loginPassword');
+        var ok = true;
         var em = email.value.trim();
         if (!em){ setErr('err-loginEmail','Email is required.'); ok = false; }
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ setErr('err-loginEmail','Enter a valid email.'); ok = false; }
         if (!password.value.trim()){ setErr('err-loginPassword','Password is required.'); ok = false; }
-        if (ok){
-          var formData = new FormData(form);
-          fetch('handlers/login.php', {
-            method: 'POST',
-            body: formData
-          })
-          .then(function(response){ return response.json(); })
-          .then(function(data){
-            if (data.success){
-              localStorage.setItem('user', JSON.stringify(data.user));
-              alert(data.message);
-              window.location.href = 'dashboard.php';
-            } else {
-              setErr('err-loginEmail', data.error || 'Login failed');
-            }
-          })
-          .catch(function(error){ console.error('Error:', error); });
-        }
+        if (!ok) e.preventDefault();
       });
+
       var toggle = document.getElementById('loginToggle');
       if (toggle){
         toggle.addEventListener('click', function(){
