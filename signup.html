@@ -55,6 +55,8 @@
     </section>
 
     <div class="container" role="region" aria-label="Signup form">
+      <div class="error" id="formError" style="display:none; color:red; margin-bottom:15px;"></div>
+      <div class="success" id="formSuccess" style="display:none; color:green; margin-bottom:15px;"></div>
       <form id="signupForm" novalidate>
         <div class="form-grid">
           <div class="form-group">
@@ -160,7 +162,26 @@
         if (!password.value.trim() || password.value.length < 6){ setErr('err-password','Password must be at least 6 characters.'); ok = false; }
         if (!terms.checked){ setErr('err-terms','You must accept the terms.'); ok = false; }
 
-        if (ok){ alert('Signup successful — welcome to PharmaSync!'); form.reset(); }
+        if (ok){
+          var formData = new FormData(form);
+          fetch('handlers/signup.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(function(response){ return response.json(); })
+          .then(function(data){
+            if (data.success){
+              var successEl = document.getElementById('formSuccess');
+              if (successEl){ successEl.style.display = 'block'; successEl.textContent = data.message; }
+              form.reset();
+              setTimeout(function(){ window.location.href = 'login.html'; }, 2000);
+            } else {
+              var errorEl = document.getElementById('formError');
+              if (errorEl){ errorEl.style.display = 'block'; errorEl.textContent = data.error || 'An error occurred'; }
+            }
+          })
+          .catch(function(error){ console.error('Error:', error); });
+        }
       });
 
       var toggle = document.getElementById('togglePass');

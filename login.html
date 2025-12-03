@@ -111,7 +111,24 @@
         if (!em){ setErr('err-loginEmail','Email is required.'); ok = false; }
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ setErr('err-loginEmail','Enter a valid email.'); ok = false; }
         if (!password.value.trim()){ setErr('err-loginPassword','Password is required.'); ok = false; }
-        if (ok){ alert('Signed in successfully'); form.reset(); }
+        if (ok){
+          var formData = new FormData(form);
+          fetch('handlers/login.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(function(response){ return response.json(); })
+          .then(function(data){
+            if (data.success){
+              localStorage.setItem('user', JSON.stringify(data.user));
+              alert(data.message);
+              window.location.href = 'dashboard.php';
+            } else {
+              setErr('err-loginEmail', data.error || 'Login failed');
+            }
+          })
+          .catch(function(error){ console.error('Error:', error); });
+        }
       });
       var toggle = document.getElementById('loginToggle');
       if (toggle){
