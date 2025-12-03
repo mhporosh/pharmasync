@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up — PharmaSync</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <script src="https://kit.fontawesome.com/d3e9fb9ce3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo">
+        <span class="brand-logo"><i class="fas fa-plus"></i></span>
+        <h1>PharmaSync</h1>
+      </div>
+      <div class="search">
+        <input type="text" placeholder="search anything" size="30" id="search-box" />
+        <input type="submit" value="search" id="search-button" />
+      </div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="#">Features</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="profile">
+        <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false" aria-label="Open profile menu">
+          <i class="fas fa-user-circle"></i>
+        </button>
+        <div id="profileMenu" class="profile-menu" role="menu" aria-hidden="true">
+          <a href="login.html" role="menuitem">Login / Signup</a>
+          <a href="#" role="menuitem">Register</a>
+          <a href="#" role="menuitem">Profile</a>
+          <a href="#" role="menuitem">Dashboard</a>
+          <a href="#" role="menuitem">Help</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section style="padding: 28px 12px; text-align: center;">
+      <div style="display:inline-flex; align-items:center; gap:8px; justify-content:center;">
+        <span style="height:28px; width:28px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; background:var(--accent-light); color:var(--accent); box-shadow:0 0 18px rgba(13,110,253,0.45);"><i class="fas fa-plus"></i></span>
+        <span style="font-weight:700; color:#072A36; font-size:1.05rem;">PharmaSync</span>
+      </div>
+      <h2 style="margin:10px 0 4px; font-size:2rem; color:#072A36;">Create Your Account</h2>
+      <p class="note" style="margin:0 auto 18px; max-width:720px;">Join hundreds of pharmacies managing their operations with PharmaSync</p>
+    </section>
+
+    <div class="container" role="region" aria-label="Signup form">
+      <form id="signupForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="e.g., Mehedi Hasan" required>
+            <div class="error" id="err-firstName"></div>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="e.g., Porosh" required>
+            <div class="error" id="err-lastName"></div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            <div class="error" id="err-email"></div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="password">Password</label>
+            <div style="position:relative;">
+              <input type="password" id="password" name="password" placeholder="••••••••" required style="padding-right:40px;">
+              <button type="button" id="togglePass" aria-label="Show password" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:transparent; border:none; color:#667;">
+                <i class="far fa-eye"></i>
+              </button>
+            </div>
+            <div class="error" id="err-password"></div>
+          </div>
+
+          <div class="form-group full-width terms-row">
+            <label class="terms-label" for="terms">
+              <input type="checkbox" id="terms" required>
+              I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </label>
+            <div class="error" id="err-terms"></div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" id="createAccountBtn" class="btn btn-primary" disabled>Create Account</button>
+        </div>
+      </form>
+
+      <p style="text-align:center; margin-top:12px;">Already have an account? <a href="login.html" class="small-link">Sign In</a></p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer">
+      <p>&copy; 2025 PharmaSync Ltd. All rights reserved.</p>
+      <p>Contact us: contact.pharmasync@gmail.com | +8801716008149</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (function(){
+      var form = document.getElementById('signupForm');
+      if (!form) return;
+      var firstName = document.getElementById('firstName');
+      var lastName = document.getElementById('lastName');
+      var email = document.getElementById('email');
+      var password = document.getElementById('password');
+      var terms = document.getElementById('terms');
+      var createBtn = document.getElementById('createAccountBtn');
+
+      function setErr(id, msg){ var el = document.getElementById(id); if (el) el.textContent = msg || ''; }
+
+      function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+      function canSubmit(){
+        var ok = true;
+        if (!firstName.value.trim()) ok = false;
+        if (!lastName.value.trim()) ok = false;
+        var em = email.value.trim();
+        if (!em || !isEmail(em)) ok = false;
+        if (!password.value.trim() || password.value.length < 6) ok = false;
+        if (!terms.checked) ok = false;
+        return ok;
+      }
+      function syncBtn(){
+        if (createBtn) createBtn.disabled = !canSubmit();
+      }
+      syncBtn();
+      ['input','change','keyup'].forEach(function(evt){
+        firstName.addEventListener(evt, syncBtn);
+        lastName.addEventListener(evt, syncBtn);
+        email.addEventListener(evt, syncBtn);
+        password.addEventListener(evt, syncBtn);
+      });
+      terms.addEventListener('change', function(){ syncBtn(); if (terms.checked) setErr('err-terms',''); });
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var ok = true;
+        setErr('err-firstName'); setErr('err-lastName'); setErr('err-email'); setErr('err-password'); setErr('err-terms');
+
+        if (!firstName.value.trim()){ setErr('err-firstName','First name is required.'); ok = false; }
+        if (!lastName.value.trim()){ setErr('err-lastName','Last name is required.'); ok = false; }
+        var em = email.value.trim();
+        if (!em){ setErr('err-email','Email is required.'); ok = false; }
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ setErr('err-email','Enter a valid email.'); ok = false; }
+        if (!password.value.trim() || password.value.length < 6){ setErr('err-password','Password must be at least 6 characters.'); ok = false; }
+        if (!terms.checked){ setErr('err-terms','You must accept the terms.'); ok = false; }
+
+        if (ok){ alert('Signup successful — welcome to PharmaSync!'); form.reset(); }
+      });
+
+      var toggle = document.getElementById('togglePass');
+      if (toggle){
+        toggle.addEventListener('click', function(){
+          var isPassword = password.getAttribute('type') === 'password';
+          password.setAttribute('type', isPassword ? 'text' : 'password');
+          toggle.innerHTML = isPassword ? '<i class="far fa-eye-slash"></i>' : '<i class="far fa-eye"></i>';
+          toggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
