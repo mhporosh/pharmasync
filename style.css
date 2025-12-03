@@ -34,6 +34,9 @@ input:disabled {
 /* Header / nav */
 .nav { display: flex; align-items: center; background: var(--accent); padding: 10px 18px; position: relative; gap: 12px; }
 .logo h1 { color: white; font-size: 1.25rem; }
+.logo { display: inline-flex; align-items: center; gap: 8px; }
+.brand-logo { height: 26px; width: 26px; border-radius: 8px; background: #fff; color: var(--accent); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(2,6,23,0.18); }
+.brand-logo i { font-size: 14px; }
 .nav-toggle { background: transparent; border: none; color: white; font-size: 22px; margin-right: 8px; display: none; }
 .search { flex: 1 1 auto; display: flex; justify-content: center; }
 .search input[type="text"] { padding: 8px 12px; border-radius: 18px; border: none; width: 380px; max-width: 52vw; background: rgba(255,255,255,0.95); color: #222; }
@@ -106,8 +109,8 @@ body.nav-open .links a:hover { background: rgba(255,255,255,0.08); }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-group { display: flex; flex-direction: column; }
 label { margin-bottom: 6px; font-weight: 600; color: #222; }
-input[type="text"], input[type="tel"], input[type="password"], select, textarea { padding: 10px 12px; border: 1px solid #cfcfcf; border-radius: 8px; font-size: 14px; outline: none; }
-input[type="text"]:focus, input[type="tel"]:focus, input[type="password"]:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(13,110,253,0.06); }
+input[type="text"], input[type="tel"], input[type="password"], input[type="email"], select, textarea { padding: 10px 12px; border: 1px solid #cfcfcf; border-radius: 8px; font-size: 14px; outline: none; width: 100%; }
+input[type="text"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="email"]:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(13,110,253,0.06); }
 
 .note { font-size: 13px; color: #555; margin-bottom: 12px; }
 .error { color: #b00020; font-size: 13px; margin-top: 6px; }
@@ -115,6 +118,9 @@ input[type="text"]:focus, input[type="tel"]:focus, input[type="password"]:focus,
 .btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-block; }
 .btn-primary { background: var(--accent); color: #fff; }
 .btn-secondary { background: #f0f0f0; color: #333; }
+/* success variant for actions like Signup */
+.btn-success { background: #137c2c; color: #fff; }
+.btn-success:hover { background: #0f6624; }
 
 /* Responsive tweaks */
 @media (max-width: 900px) { .cards { gap: 12px; } .card { width: 45%; } }
@@ -275,15 +281,16 @@ label {
     color: #222;
 }
 
-input[type="text"], input[type="tel"], input[type="password"], select, textarea {
+input[type="text"], input[type="tel"], input[type="password"], input[type="email"], select, textarea {
     padding: 10px 12px;
     border: 1px solid #cfcfcf;
     border-radius: 6px;
     font-size: 14px;
     outline: none;
+    width: 100%;
 }
 
-input[type="text"]:focus, input[type="tel"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+input[type="text"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(13,110,253,0.08);
 }
@@ -359,3 +366,9 @@ textarea {
         flex-direction: column-reverse;
     }
 }
+
+/* Terms checkbox row */
+.terms-row .terms-label { display: inline-flex; align-items: center; gap: 10px; color: #072A36; }
+.terms-row a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.terms-row a:hover { text-decoration: underline; }
+input[type="checkbox"] { accent-color: var(--accent); }
