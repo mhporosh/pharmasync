@@ -64,10 +64,12 @@
 				}
 			});
 
-			document.getElementById('cancelBtn').addEventListener('click', function () {
-				// navigate back to home
-				window.location.href = 'index.html';
-			});
+			const cancel = document.getElementById('cancelBtn');
+			if (cancel) {
+				cancel.addEventListener('click', function () {
+					window.location.href = 'index.html';
+				});
+			}
 		})();
 
 		// Mobile nav toggle
@@ -88,6 +90,11 @@
 			navToggle.addEventListener('click', function (e) {
 				e.stopPropagation();
 				if (document.body.classList.contains('nav-open')) closeNav(); else openNav();
+				// Also collapse sidebar on small screens
+				const layout = document.querySelector('.layout');
+				if (layout && window.matchMedia('(max-width: 980px)').matches) {
+					layout.classList.toggle('side-collapsed');
+				}
 			});
 
 			// Close when clicking outside the nav panel
@@ -101,11 +108,33 @@
 				if (e.key === 'Escape') closeNav();
 			});
 		})();
+	// Sidebar collapse toggle on dashboard
+(function(){
+    const btn = document.getElementById('sidebarToggle');
+    const layout = document.querySelector('.layout');
+    if (!btn || !layout) return;
+    function collapse(){
+        layout.classList.add('side-collapsed');
+        btn.setAttribute('aria-expanded','false');
+        const subs = document.querySelectorAll('.submenu');
+        subs.forEach(s => s.classList.remove('show'));
+        const toggles = document.querySelectorAll('.menu-item.has-sub');
+        toggles.forEach(b => b.setAttribute('aria-expanded','false'));
+    }
+    function expand(){
+        layout.classList.remove('side-collapsed');
+        btn.setAttribute('aria-expanded','true');
+    }
+    btn.addEventListener('click', function(){
+        if (layout.classList.contains('side-collapsed')) expand(); else collapse();
+    });
+})();
 
 
-	(function () {
-		const btn = document.getElementById('profileBtn');
-		const menu = document.getElementById('profileMenu');
+
+(function () {
+    const btn = document.getElementById('profileBtn');
+    const menu = document.getElementById('profileMenu');
 
 		if (!btn || !menu) return;
 
@@ -137,7 +166,8 @@
 		document.addEventListener('keydown', function (e) {
 			if (e.key === 'Escape') closeMenu();
 		});
-	})();
+})();
+
 
 	(function () {
 		const expandBtn = document.getElementById('expand-button');
@@ -166,3 +196,43 @@
 			if (expanded) close(); else open();
 		});
 	})();
+
+// Dashboard-specific: submenu toggles, theme toggle, and sidebar collapse
+document.addEventListener('DOMContentLoaded', function(){
+	// Submenu toggles
+	const toggles = document.querySelectorAll('.menu-item.has-sub');
+	toggles.forEach(function(btn){
+		btn.addEventListener('click', function(){
+			const id = btn.getAttribute('data-target');
+			const sub = document.getElementById(id);
+			if (!sub) return;
+			const open = sub.classList.contains('show');
+			if (open){ sub.classList.remove('show'); btn.setAttribute('aria-expanded','false'); }
+			else { sub.classList.add('show'); btn.setAttribute('aria-expanded','true'); }
+		});
+	});
+
+    // Theme toggle: default light, switch to dark on user click
+    const themeBtn = document.getElementById('themeToggle');
+    document.body.classList.remove('dark');
+    if (themeBtn){
+        themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        themeBtn.addEventListener('click', function(){
+            const darkOn = document.body.classList.toggle('dark');
+            try { localStorage.setItem('ps_theme', darkOn ? 'dark' : 'light'); } catch(e){}
+            themeBtn.innerHTML = darkOn ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+    }
+
+	// Sidebar collapse (button exists on dashboard)
+	const sideBtn = document.getElementById('sidebarToggle');
+	const layout = document.querySelector('.layout');
+	if (sideBtn && layout){
+		sideBtn.addEventListener('click', function(){
+			const collapsed = layout.classList.toggle('side-collapsed');
+			sideBtn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+			// rotate chevron
+			try { sideBtn.innerHTML = collapsed ? '<i class="fas fa-angle-right"></i>' : '<i class="fas fa-angle-left"></i>'; } catch(e){}
+		});
+	}
+});

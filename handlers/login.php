@@ -50,7 +50,5 @@ $_SESSION['user_id'] = $id;
 $_SESSION['user_name'] = $first_name . ' ' . $last_name;
 
 $conn->close();
-header('Location: ../index.html');
+header('Location: ../dashboard.php');
 exit;
-
-?>
