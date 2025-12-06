@@ -22,3 +22,20 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Optional future tables can be added below, e.g. products, sales, etc.
+
+-- Medicines table
+CREATE TABLE IF NOT EXISTS medicines (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    medicine_name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL,
+    generic_name VARCHAR(255),
+    unit_size VARCHAR(100),
+    price DECIMAL(10,2),
+    expiry_date DATE DEFAULT NULL,
+    stock INT DEFAULT 0
+);
+
+
+
+ALTER TABLE medicines
+ADD COLUMN id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;

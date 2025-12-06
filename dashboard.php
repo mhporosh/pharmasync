@@ -92,9 +92,9 @@ $conn->close();
 
         <button class="menu-item has-sub" data-target="inventory-sub" aria-expanded="false"><span><i class="fas fa-boxes"></i></span><span>Inventory</span><i class="fas fa-chevron-down chevron"></i></button>
         <div id="inventory-sub" class="submenu">
-          <a href="#" class="submenu-item"><span><i class="fas fa-pills"></i></span><span>All Products</span></a>
-          <a href="#" class="submenu-item"><span><i class="fas fa-hourglass-end"></i></span><span>Expiry Management</span></a>
-          <a href="#" class="submenu-item"><span><i class="fas fa-exclamation-triangle"></i></span><span>Low Stock Alerts</span></a>
+          <a href="handlers/all_products.php" class="submenu-item"><span><i class="fas fa-pills"></i></span><span>All Products</span></a>
+          <a href="handlers/expiry_management.php" class="submenu-item"><span><i class="fas fa-hourglass-end"></i></span><span>Expiry Management</span></a>
+          <a href="handlers/low_stock_alerts.php" class="submenu-item"><span><i class="fas fa-exclamation-triangle"></i></span><span>Low Stock Alerts</span></a>
         </div>
 
         <button class="menu-item has-sub" data-target="purchases-sub" aria-expanded="false"><span><i class="fas fa-shopping-cart"></i></span><span>Purchases</span><i class="fas fa-chevron-down chevron"></i></button>
