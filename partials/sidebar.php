@@ -25,8 +25,8 @@ $staffOpen = $menuKey === 'staff';
 
     <button class="menu-item has-sub<?= $salesOpen ? ' active' : '' ?>" data-target="sales-sub" aria-expanded="<?= $salesOpen ? 'true' : 'false' ?>"><span><i class="fas fa-dollar-sign"></i></span><span>Sales</span><i class="fas fa-chevron-down chevron"></i></button>
     <div id="sales-sub" class="submenu<?= $salesOpen ? ' show' : '' ?>">
-      <a href="#" class="submenu-item"><span><i class="fas fa-cash-register"></i></span><span>Point of Sale</span></a>
-      <a href="#" class="submenu-item"><span><i class="fas fa-chart-bar"></i></span><span>Sales Overview</span></a>
+      <a href="pos.php" class="submenu-item<?= $pageKey === 'pos' ? ' active' : '' ?>"><span><i class="fas fa-cash-register"></i></span><span>Point of Sale</span></a>
+      <a href="sales_overview.php" class="submenu-item<?= $pageKey === 'sales_overview' ? ' active' : '' ?>"><span><i class="fas fa-chart-bar"></i></span><span>Sales Overview</span></a>
       <a href="#" class="submenu-item"><span><i class="fas fa-history"></i></span><span>Sales History</span></a>
     </div>
 
