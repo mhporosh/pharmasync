@@ -27,7 +27,7 @@ $staffOpen = $menuKey === 'staff';
     <div id="sales-sub" class="submenu<?= $salesOpen ? ' show' : '' ?>">
       <a href="pos.php" class="submenu-item<?= $pageKey === 'pos' ? ' active' : '' ?>"><span><i class="fas fa-cash-register"></i></span><span>Point of Sale</span></a>
       <a href="sales_overview.php" class="submenu-item<?= $pageKey === 'sales_overview' ? ' active' : '' ?>"><span><i class="fas fa-chart-bar"></i></span><span>Sales Overview</span></a>
-      <a href="#" class="submenu-item"><span><i class="fas fa-history"></i></span><span>Sales History</span></a>
+      <a href="sales_history.php" class="submenu-item<?= $pageKey === 'sales_history' ? ' active' : '' ?>"><span><i class="fas fa-history"></i></span><span>Sales History</span></a>
     </div>
 
     <button class="menu-item has-sub<?= $inventoryOpen ? ' active' : '' ?>" data-target="inventory-sub" aria-expanded="<?= $inventoryOpen ? 'true' : 'false' ?>"><span><i class="fas fa-boxes"></i></span><span>Inventory</span><i class="fas fa-chevron-down chevron"></i></button>
