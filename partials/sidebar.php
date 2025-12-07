@@ -41,6 +41,8 @@ $staffOpen = $menuKey === 'staff';
     <div id="purchases-sub" class="submenu<?= $purchasesOpen ? ' show' : '' ?>">
       <a href="purchase_orders.php" class="submenu-item<?= $pageKey === 'purchase_orders' ? ' active' : '' ?>"><span><i class="fas fa-file-invoice-dollar"></i></span><span>Purchase Orders</span></a>
       <a href="suppliers.php" class="submenu-item<?= $pageKey === 'suppliers' ? ' active' : '' ?>"><span><i class="fas fa-industry"></i></span><span>Suppliers</span></a>
+      <a href="#" class="submenu-item"><span><i class="fas fa-file-invoice-dollar"></i></span><span>Purchase Orders</span></a>
+      <a href="#" class="submenu-item"><span><i class="fas fa-industry"></i></span><span>Suppliers</span></a>
     </div>
 
     <button class="menu-item has-sub<?= $customersOpen ? ' active' : '' ?>" data-menu="customers" data-target="customers-sub" aria-expanded="<?= $customersOpen ? 'true' : 'false' ?>"><span><i class="fas fa-user-friends"></i></span><span>Customers</span><i class="fas fa-chevron-down chevron"></i></button>
