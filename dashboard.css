@@ -518,6 +518,72 @@ body.dark .staff-card .staff-action-btn:hover { background:rgba(59,130,246,0.16)
 .tab-panel.active { display:block; }
 
 /* Full-width adjustments for pages that need to use the full content area */
+
+/* Purchase Orders page styles */
+.purchase-header { display:flex; align-items:flex-start; gap:12px; margin-bottom: 12px; }
+.purchase-title { font-size:1.45rem; font-weight:800; color: #072A36; }
+.purchase-sub { color: #6b837c; margin-top:6px; font-size:0.95rem; }
+.po-actions { margin-left:auto; display:flex; gap:10px; align-items:center; }
+.btn-new-po { background: var(--accent); color:#fff; padding:10px 14px; border-radius:8px; border:none; font-weight:700; box-shadow:0 8px 20px rgba(11,18,20,0.08); }
+.po-tabs { display:flex; gap:18px; border-bottom:1px solid #eef3f1; padding-bottom:10px; margin-bottom:22px; }
+.po-tabs button { background:transparent; border:none; padding:8px 12px; cursor:pointer; font-weight:700; color:#5c6c7e; border-radius:8px; }
+.po-tabs button.active { color: var(--accent); border-bottom:3px solid var(--accent); background: rgba(13,110,253,0.06); }
+.po-empty { text-align:center; padding:56px 24px; color:#6b837c; }
+.po-empty .icon { font-size:40px; color:var(--accent); background:rgba(13,110,253,0.06); display:inline-flex; align-items:center; justify-content:center; height:72px; width:72px; border-radius:12px; margin-bottom:16px; }
+.po-empty h3 { margin:0; font-size:1.15rem; color:#072A36; margin-bottom:6px; font-weight:800; }
+.po-empty p { margin:0; color:#6b837c; max-width:520px; margin-left:auto; margin-right:auto; }
+
+/* Suppliers page styles */
+.suppliers-header { display:flex; align-items:center; gap:12px; margin-bottom: 18px; position:relative; }
+.suppliers-title { font-size:1.5rem; font-weight:800; color: #072A36; }
+.suppliers-sub { color: #6b837c; margin-top:6px; font-size:0.95rem; }
+.suppliers-actions { margin-left:auto; display:flex; gap:10px; align-items:center; }
+.btn-add-supplier { background: var(--accent); color:#fff; padding:10px 14px; border-radius:999px; border:none; font-weight:700; box-shadow:0 8px 20px rgba(13,110,253,0.18); display:inline-flex; align-items:center; gap:8px; }
+.btn-add-supplier i { margin:0; }
+.suppliers-list { display:flex; justify-content:center; align-items:center; min-height:320px; }
+.suppliers-grid { display:grid; gap:18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.supplier-card { background:#fff; border-radius:12px; padding:28px 24px;  display:flex; flex-direction:column; gap:12px; align-items:center; }
+.supplier-card h4 { margin:0; font-size:1.05rem; color:#072A36; font-weight:800; }
+.supplier-card .muted { color:#6b837c; font-size:13px; text-align:center; }
+.supplier-icon { height:72px; width:72px; border-radius:999px; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-size:30px; box-shadow:0 10px 30px rgba(13,110,253,0.16); }
+
+/* small responsive tweak */
+@media (max-width:720px) {
+  .btn-add-supplier { padding:8px 12px; }
+  .supplier-card { width:90%; }
+}
+
+/* Suppliers list table layout */
+.suppliers-panel { display:flex; flex-direction:column; gap:12px; }
+.suppliers-toolbar { display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.suppliers-left { display:flex; gap:12px; align-items:center; }
+.search-input { border:1px solid #e6e9eb; padding:10px 12px; border-radius:8px; width:320px; background:#fff; }
+.suppliers-actions .filters { display:inline-flex; gap:8px; align-items:center; }
+.page-size { border:1px solid #e6e9eb; padding:8px 8px; border-radius:6px; background:#fff; }
+
+.suppliers-table { width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 8px 22px rgba(2,6,23,0.04); }
+.suppliers-table thead th { background:#f4f6f7; text-align:left; padding:12px 14px; font-weight:700; color:#072A36; border-bottom:1px solid #e9eef0; font-size:13px; }
+.suppliers-table tbody td { padding:12px 14px; border-bottom:1px solid #f1f4f5; color:#334; font-size:14px; }
+.suppliers-table tbody tr:hover { background: #fbfcfd; }
+.suppliers-table .checkbox-col { width:48px; }
+.suppliers-table .actions-col { width:140px; }
+.badge.status { display:inline-block; padding:6px 10px; border-radius:8px; font-weight:700; font-size:12px; }
+.badge.status.active { background:rgba(34,197,94,0.12); color:#16a34a; border:1px solid rgba(34,197,94,0.12); }
+.badge.status.inactive { background:rgba(249,115,22,0.06); color:#ea580c; }
+
+.action-btn { height:34px; width:34px; border-radius:8px; border:1px solid #e6e9eb; background:#fff; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:#344; }
+.action-btn:hover { background:#f7fafb; }
+
+.pagination { display:flex; gap:8px; align-items:center; color:#6b837c; }
+.pagination .page-btn { display:inline-flex; align-items:center; justify-content:center; height:36px; width:36px; border-radius:6px; border:1px solid #e6e9eb; background:#fff; cursor:pointer; }
+.table-meta { color:#6b837c; font-size:13px; }
+
+/* green variant for Add Supplier button */
+.btn-add-supplier.green { background:#198754; box-shadow:0 8px 20px rgba(25,135,84,0.12); }
+.btn-add-supplier.green:hover { background:#15703f; }
+
+/* Reuse generic modal styles already defined in this file */
+
 .dash-wrap.fullwidth {
   max-width: none;
   margin: 0;

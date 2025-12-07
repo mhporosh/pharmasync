@@ -33,7 +33,7 @@ input:disabled {
 
 /* Header / nav */
 .nav { display: flex; align-items: center; background: var(--accent); padding: 10px 18px; position: relative; gap: 12px; }
-.logo h1 { color:black; font-size: 1.25rem; }
+.logo h1 { color:white; font-size: 1.25rem; }
 .logo { display: inline-flex; align-items: center; gap: 8px; }
 .brand-logo { height: 26px; width: 26px; border-radius: 8px; background: #fff; color: var(--accent); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(2,6,23,0.18); }
 .brand-logo i { font-size: 14px; }
