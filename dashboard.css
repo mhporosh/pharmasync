@@ -579,8 +579,8 @@ body.dark .staff-card .staff-action-btn:hover { background:rgba(59,130,246,0.16)
 .table-meta { color:#6b837c; font-size:13px; }
 
 /* green variant for Add Supplier button */
-.btn-add-supplier.green { background:#198754; box-shadow:0 8px 20px rgba(25,135,84,0.12); }
-.btn-add-supplier.green:hover { background:#15703f; }
+.btn-add-supplier.green { background:#0b5ed7; box-shadow:0 8px 20px rgba(25,135,84,0.12); }
+.btn-add-supplier.green:hover { background:#0b5ed7; }
 
 /* Reuse generic modal styles already defined in this file */
 
