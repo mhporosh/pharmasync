@@ -33,7 +33,7 @@ input:disabled {
 
 /* Header / nav */
 .nav { display: flex; align-items: center; background: var(--accent); padding: 10px 18px; position: relative; gap: 12px; }
-.logo h1 { color: white; font-size: 1.25rem; }
+.logo h1 { color:black; font-size: 1.25rem; }
 .logo { display: inline-flex; align-items: center; gap: 8px; }
 .brand-logo { height: 26px; width: 26px; border-radius: 8px; background: #fff; color: var(--accent); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(2,6,23,0.18); }
 .brand-logo i { font-size: 14px; }
@@ -372,3 +372,59 @@ textarea {
 .terms-row a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .terms-row a:hover { text-decoration: underline; }
 input[type="checkbox"] { accent-color: var(--accent); }
+
+/* Inventory Table Styles */
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 32px auto 24px;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(11,18,20,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--accent-2); /* Added border */
+}
+.inventory-table th, .inventory-table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+.inventory-table th {
+  background: var(--accent-light);
+  color: var(--accent-2);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.inventory-table tr:last-child td {
+  border-bottom: none;
+}
+.inventory-table tr:hover {
+  background: #f6f9fb;
+}
+.inventory-table .low-stock {
+  background: #fffbe6 !important;
+}
+.inventory-table .expired {
+  background: #ffeaea !important;
+  color: #b00020;
+}
+.inventory-table .expiring-soon {
+  background: #fff8e1 !important;
+}
+.inventory-table td {
+  font-size: 0.98rem;
+  color: #222;
+}
+.inventory-table .price {
+  color: #137c2c;
+  font-weight: 600;
+}
+.inventory-table .stock {
+  font-weight: 700;
+}
+.inventory-table .expiry {
+  font-weight: 600;
+}
+.inventory-table .actions {
+  text-align: center;
+}
