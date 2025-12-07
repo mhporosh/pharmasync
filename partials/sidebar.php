@@ -39,7 +39,7 @@ $staffOpen = $menuKey === 'staff';
 
     <button class="menu-item has-sub<?= $purchasesOpen ? ' active' : '' ?>" data-menu="purchases" data-target="purchases-sub" aria-expanded="<?= $purchasesOpen ? 'true' : 'false' ?>"><span><i class="fas fa-shopping-cart"></i></span><span>Purchases</span><i class="fas fa-chevron-down chevron"></i></button>
     <div id="purchases-sub" class="submenu<?= $purchasesOpen ? ' show' : '' ?>">
-      <a href="#" class="submenu-item"><span><i class="fas fa-file-invoice-dollar"></i></span><span>Purchase Orders</span></a>
+      <a href="purchase_orders.php" class="submenu-item<?= $pageKey === 'purchase_orders' ? ' active' : '' ?>"><span><i class="fas fa-file-invoice-dollar"></i></span><span>Purchase Orders</span></a>
       <a href="#" class="submenu-item"><span><i class="fas fa-industry"></i></span><span>Suppliers</span></a>
     </div>
 

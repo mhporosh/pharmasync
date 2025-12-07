@@ -518,6 +518,20 @@ body.dark .staff-card .staff-action-btn:hover { background:rgba(59,130,246,0.16)
 .tab-panel.active { display:block; }
 
 /* Full-width adjustments for pages that need to use the full content area */
+
+/* Purchase Orders page styles */
+.purchase-header { display:flex; align-items:flex-start; gap:12px; margin-bottom: 12px; }
+.purchase-title { font-size:1.45rem; font-weight:800; color: #072A36; }
+.purchase-sub { color: #6b837c; margin-top:6px; font-size:0.95rem; }
+.po-actions { margin-left:auto; display:flex; gap:10px; align-items:center; }
+.btn-new-po { background: var(--accent); color:#fff; padding:10px 14px; border-radius:8px; border:none; font-weight:700; box-shadow:0 8px 20px rgba(11,18,20,0.08); }
+.po-tabs { display:flex; gap:18px; border-bottom:1px solid #eef3f1; padding-bottom:10px; margin-bottom:22px; }
+.po-tabs button { background:transparent; border:none; padding:8px 12px; cursor:pointer; font-weight:700; color:#5c6c7e; border-radius:8px; }
+.po-tabs button.active { color: var(--accent); border-bottom:3px solid var(--accent); background: rgba(13,110,253,0.06); }
+.po-empty { text-align:center; padding:56px 24px; color:#6b837c; }
+.po-empty .icon { font-size:40px; color:var(--accent); background:rgba(13,110,253,0.06); display:inline-flex; align-items:center; justify-content:center; height:72px; width:72px; border-radius:12px; margin-bottom:16px; }
+.po-empty h3 { margin:0; font-size:1.15rem; color:#072A36; margin-bottom:6px; font-weight:800; }
+.po-empty p { margin:0; color:#6b837c; max-width:520px; margin-left:auto; margin-right:auto; }
 .dash-wrap.fullwidth {
   max-width: none;
   margin: 0;
