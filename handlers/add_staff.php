@@ -1,6 +1,6 @@
 <?php
 // handlers/add_staff.php
-// Accepts POST to create a new staff account and insert into `users` table.
+// Accepts POST to create a new staff account and insert into `staff` table.
 
 require_once __DIR__ . '/../config/db.php';
 
@@ -53,12 +53,16 @@ try {
 }
 $hash = password_hash($tmp, PASSWORD_DEFAULT);
 
-$ins = $conn->prepare('INSERT INTO users (first_name, last_name, email, password_hash, created_at) VALUES (?, ?, ?, ?, NOW())');
+// Insert into `staff` table so newly created staff are shown in `staff_directory.php`.
+$ins = $conn->prepare('INSERT INTO staff (first_name, last_name, fullname, email, role, status, password_hash, joined_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())');
 if (!$ins) {
     echo json_encode(['success' => false, 'error' => 'Server error (insert prepare).']);
     exit;
 }
-$ins->bind_param('ssss', $first, $last, $email, $hash);
+$fullname = trim($fullname);
+$role_final = $role ?: 'Staff';
+$status_default = 'ACTIVE';
+$ins->bind_param('sssssss', $first, $last, $fullname, $email, $role_final, $status_default, $hash);
 if ($ins->execute()) {
     $newId = $ins->insert_id;
     $ins->close();

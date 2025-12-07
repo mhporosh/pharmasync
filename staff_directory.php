@@ -3,6 +3,27 @@ require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/partials/auth.php';
 $activeMenu = 'staff';
 $activePage = 'staff_directory';
+// Fetch staff from database (table `staff`) and compute overview metrics
+$staff_rows = [];
+$totalStaff = 0;
+$activeStaff = 0;
+$admins = 0;
+$salesToday = 0;
+// Attempt to query the `staff` table. If the table does not exist or query fails,
+// we silently fall back to zero values and show a helpful message in the UI.
+if (isset($conn)) {
+  $sql = "SELECT id, fullname, email, role, status, joined_date, COALESCE(sales_today,0) AS sales_today, COALESCE(products_added,0) AS products_added FROM staff";
+  $result = @$conn->query($sql);
+  if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $staff_rows[] = $row;
+      $totalStaff++;
+      if (isset($row['status']) && strtolower($row['status']) === 'active') $activeStaff++;
+      if (isset($row['role']) && strtolower($row['role']) === 'admin') $admins++;
+      $salesToday += intval($row['sales_today']);
+    }
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,22 +66,22 @@ $activePage = 'staff_directory';
         <div class="metric-grid staff-metrics">
           <div class="stat-card">
             <div class="stat-label">Total Staff</div>
-            <div class="stat-value" id="totalStaff">1</div>
+            <div class="stat-value" id="totalStaff"><?php echo intval($totalStaff); ?></div>
             <div class="stat-icon"><i class="fas fa-users"></i></div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Active Staff</div>
-            <div class="stat-value" id="activeStaff">1</div>
+            <div class="stat-value" id="activeStaff"><?php echo intval($activeStaff); ?></div>
             <div class="stat-icon"><i class="fas fa-user-check"></i></div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Admins</div>
-            <div class="stat-value" id="admins">1</div>
+            <div class="stat-value" id="admins"><?php echo intval($admins); ?></div>
             <div class="stat-icon"><i class="fas fa-user-shield"></i></div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Sales Today</div>
-            <div class="stat-value" id="salesToday">0</div>
+            <div class="stat-value" id="salesToday"><?php echo intval($salesToday); ?></div>
             <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
           </div>
         </div>
@@ -68,38 +89,52 @@ $activePage = 'staff_directory';
         <div class="panel" style="margin-top:18px;">
           <h3 style="margin:0 0 12px 0;">Accounts</h3>
           <div class="staff-list-grid">
-            <div class="staff-card compact">
-              <div class="staff-card-left">
-                <div class="avatar">MP</div>
+            <?php if (count($staff_rows) === 0): ?>
+              <div class="panel" style="padding:18px; border-radius:8px; background:#fbfbfb;">
+                <p style="margin:0;">No staff accounts yet. Click <strong>Add Staff</strong> to create a new staff record.</p>
               </div>
-              <div class="staff-card-body">
-                <div class="staff-top-row">
-                  <div class="staff-name">Mehedi Hasan Porosh</div>
-                  <div class="staff-email">porosh.diu@gmail.com</div>
+            <?php else: ?>
+              <?php foreach ($staff_rows as $s): ?>
+                <?php
+                  $initials = '';
+                  if (!empty($s['fullname'])) {
+                      $parts = preg_split('/\s+/', trim($s['fullname']));
+                      $initials = strtoupper(substr($parts[0],0,1) . (isset($parts[1]) ? substr($parts[1],0,1) : ''));
+                  }
+                  $joined = !empty($s['joined_date']) ? date('n/j/Y', strtotime($s['joined_date'])) : date('n/j/Y');
+                ?>
+                <div class="staff-card compact">
+                  <div class="staff-card-left">
+                    <div class="avatar"><?php echo htmlspecialchars($initials ?: 'US'); ?></div>
+                  </div>
+                  <div class="staff-card-body">
+                    <div class="staff-top-row">
+                      <div class="staff-name"><?php echo htmlspecialchars($s['fullname'] ?? 'Unnamed'); ?></div>
+                      <div class="staff-email"><?php echo htmlspecialchars($s['email'] ?? ''); ?></div>
+                    </div>
+                    <div class="staff-info-grid">
+                      <div class="info-label">Role:</div>
+                      <div class="info-value"><span class="badge role"><?php echo htmlspecialchars(strtoupper($s['role'] ?? 'Staff')); ?></span></div>
+
+                      <div class="info-label">Status:</div>
+                      <div class="info-value"><span class="badge status"><?php echo htmlspecialchars(strtoupper($s['status'] ?? 'INACTIVE')); ?></span></div>
+
+                      <div class="info-label">Sales Today:</div>
+                      <div class="info-value"><?php echo intval($s['sales_today'] ?? 0); ?></div>
+
+                      <div class="info-label">Products Added:</div>
+                      <div class="info-value"><?php echo intval($s['products_added'] ?? 0); ?></div>
+
+                      <div class="info-label">Joined:</div>
+                      <div class="info-value"><?php echo $joined; ?></div>
+                    </div>
+                  </div>
+                  <div class="staff-card-actions">
+                    <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
+                  </div>
                 </div>
-                <div class="staff-info-grid">
-                  <div class="info-label">Role:</div>
-                  <div class="info-value"><span class="badge role admin">ADMIN</span></div>
-
-                  <div class="info-label">Status:</div>
-                  <div class="info-value"><span class="badge status active">ACTIVE</span></div>
-
-                  <div class="info-label">Sales Today:</div>
-                  <div class="info-value">0</div>
-
-                  <div class="info-label">Products Added:</div>
-                  <div class="info-value">0</div>
-
-                  <div class="info-label">Joined:</div>
-                  <div class="info-value"><?php echo date('n/j/Y'); ?></div>
-                </div>
-              </div>
-              <div class="staff-card-actions">
-                <button class="icon-btn" title="More"><i class="fas fa-ellipsis-v"></i></button>
-              </div>
-            </div>
-
-            <!-- more staff-cards can be rendered here by server-side loop -->
+              <?php endforeach; ?>
+            <?php endif; ?>
           </div>
         </div>
       </section>
