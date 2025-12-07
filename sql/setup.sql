@@ -1,3 +1,4 @@
+-- Active: 1728289758867@@127.0.0.1@3306@pharmasync
 -- PharmaSync setup script
 -- Creates database and required tables if they do not exist
 

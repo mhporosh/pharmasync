@@ -402,7 +402,7 @@ input[type="checkbox"] { accent-color: var(--accent); }
   background: #f6f9fb;
 }
 .inventory-table .low-stock {
-  background: #fffbe6 !important;
+    background: #fff !important; /* match standard expiry management row styling */
 }
 .inventory-table .expired {
   background: #ffeaea !important;
