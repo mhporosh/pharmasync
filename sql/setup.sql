@@ -36,6 +36,6 @@ CREATE TABLE IF NOT EXISTS medicines (
 );
 
 
-
+-- Add id column to medicines table if it does not exist
 ALTER TABLE medicines
 ADD COLUMN id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
