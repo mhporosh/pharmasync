@@ -1,10 +1,4 @@
-$php_debug = true;
 <?php
-if (!empty($php_debug)) {
-  ini_set('display_errors', '1');
-  ini_set('display_startup_errors', '1');
-  error_reporting(E_ALL);
-}
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/partials/auth.php';
 $activeMenu = 'purchases';
@@ -27,14 +21,14 @@ $currentAdminName = $_SESSION['user_name'] ?? 'Primary Admin';
   <?php require __DIR__ . '/partials/nav.php'; ?>
   <div class="layout">
     <?php require __DIR__ . '/partials/sidebar.php'; ?>
-    <main class="dash-wrap">
-      <div class="dash-header">
+    <main class="dash-wrap fullwidth" data-page="purchase_orders" data-page-title="Purchase Orders">
+      <div class="dash-header purchase-header">
         <div>
-          <div class="dash-title">Purchase Orders</div>
-          <div class="purchase-sub">Manage and track your purchase orders</div>
+          <h1 class="dash-title">Purchase Orders</h1>
+          <p class="dash-subtitle purchase-sub">Manage and track your purchase orders</p>
         </div>
         <div class="po-actions">
-          <button class="btn-new-po" type="button"><i class="fas fa-plus" style="margin-right:8px"></i> New Purchase Order</button>
+          <button class="btn-new-po" type="button"><i class="fas fa-plus"></i><span>New Purchase Order</span></button>
         </div>
       </div>
 
@@ -56,13 +50,14 @@ $currentAdminName = $_SESSION['user_name'] ?? 'Primary Admin';
 
     </main>
   </div>
-
+  <?php if (!function_exists('should_show_footer') || should_show_footer()): ?>
   <footer>
     <div class="footer">
       <p>&copy; 2025 PharmaSync Ltd. All rights reserved.</p>
       <p>Contact us: contact.pharmasync@gmail.com | +8801716008149</p>
     </div>
   </footer>
+  <?php endif; ?>
 </body>
 </html>
 <?php $conn->close(); ?>

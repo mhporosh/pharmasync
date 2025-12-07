@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 	});
 
-	// Theme toggle with persistence
+	// Theme toggle with persistence (controlled from nav)
 	const themeBtn = document.getElementById('themeToggle');
 	const preferredDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 	let savedTheme = 'light';

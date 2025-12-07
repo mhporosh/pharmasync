@@ -27,4 +27,13 @@ if (isset($conn) && $conn instanceof mysqli) {
 if ($admin_name === '') {
   $admin_name = 'Admin';
 }
+
+if (!function_exists('should_show_footer')) {
+  function should_show_footer(): bool
+  {
+    $footerPages = ['index.php', 'index.html', 'login.php', 'login.html', 'signup.php', 'signup.html'];
+    $script = basename($_SERVER['SCRIPT_NAME'] ?? '') ?: '';
+    return in_array(strtolower($script), $footerPages, true);
+  }
+}
 ?>

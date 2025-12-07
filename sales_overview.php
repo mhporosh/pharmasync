@@ -109,6 +109,7 @@ for ($i = 6; $i >= 0; $i--) {
   <link rel="stylesheet" href="style.css?v=20251205">
   <link rel="stylesheet" href="responsive.css?v=20251205">
   <link rel="stylesheet" href="dashboard.css?v=20251207">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <script src="https://kit.fontawesome.com/d3e9fb9ce3.js" crossorigin="anonymous"></script>
   <script src="script.js?v=20251207" defer></script>
 </head>
@@ -164,16 +165,17 @@ for ($i = 6; $i >= 0; $i--) {
       <div class="panel" style="padding:12px; margin-bottom:18px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;"><strong>Recent Sales</strong><a href="pos_pending.php" class="btn" style="padding:6px 10px; text-decoration:none; border:1px solid #e5eef2;">View All</a></div>
         <?php if ($recent && $recent->num_rows > 0): ?>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <?php while ($r = $recent->fetch_assoc()): ?>
-              <div style="display:flex; justify-content:space-between; padding:8px; border-radius:6px; background:#fbfdff; border:1px solid #f1f6f7;">
-                <div>
-                  <div style="font-weight:600">Invoice #<?= $r['id'] ?></div>
-                  <div class="muted" style="font-size:13px;"><?= $r['created_at'] ?></div>
+          <div class="recent-sales-list">
+            <?php while ($r = $recent->fetch_assoc()):
+              $status = strtolower($r['status'] ?? 'pending'); ?>
+              <div class="recent-sale-row recent-sale-row--<?= htmlspecialchars($status); ?>">
+                <div class="recent-sale-meta">
+                  <div class="invoice-label">Invoice #<?= $r['id'] ?></div>
+                  <div class="muted invoice-date"><?= $r['created_at'] ?></div>
                 </div>
-                <div style="text-align:right;">
-                  <div style="font-weight:700">BDT <?= number_format($r['total'], 2) ?></div>
-                  <div style="font-size:13px; color:<?= $r['status'] === 'paid' ? '#1b7e2a' : '#d32f2f' ?>;"><?= ucfirst($r['status']) ?></div>
+                <div class="recent-sale-amount">
+                  <div class="amount">BDT <?= number_format($r['total'], 2) ?></div>
+                  <span class="status-pill status-pill--<?= htmlspecialchars($status); ?>"><?= ucfirst($status); ?></span>
                 </div>
               </div>
             <?php endwhile; ?>

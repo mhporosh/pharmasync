@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/partials/auth.php';
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 $activeMenu = 'sales';
 $activePage = 'sales_history';
 
@@ -127,55 +129,48 @@ if ($stmt) {
   <?php require __DIR__ . '/partials/nav.php'; ?>
   <div class="layout">
     <?php require __DIR__ . '/partials/sidebar.php'; ?>
-    <main class="dash-wrap">
+    <main class="dash-wrap sales-history-page">
       <div class="dash-header">
         <div>
           <div class="dash-title">Sales History</div>
-          <div style="color:#666; font-size:14px; margin-top:4px;">View your pharmacy sales records and manage transactions</div>
+          <p class="dash-subtitle">View your pharmacy sales records and manage transactions</p>
         </div>
       </div>
 
-      <div class="panel">
-        <!-- Search and Filters -->
-        <div style="display:flex; gap:12px; margin-bottom:18px; flex-wrap:wrap; align-items:flex-end;">
-          <div style="flex:1; min-width:250px;">
-            <form method="get" style="display:flex; gap:8px;">
-              <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search sales..." style="flex:1; padding:10px 12px; border-radius:8px; border:1px solid #d0d7de; background:#fff;">
-              <button class="btn btn-primary" type="submit" style="padding:10px 16px;">
-                <i class="fas fa-search" style="margin-right:6px;"></i>Search
-              </button>
-            </form>
-          </div>
-
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="btn" id="filterBtn" style="padding:10px 16px; border:1px solid #d0d7de; background:#fff; cursor:pointer;">
-              <i class="fas fa-filter" style="margin-right:6px;"></i>Filters
+      <div class="panel sales-history-panel">
+        <div class="sales-toolbar">
+          <form method="get" class="sales-search-form">
+            <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search sales..." class="sales-input">
+            <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search"></i>
+              Search
             </button>
-            <div style="position:relative;">
-              <select name="limit" id="limitSelect" onchange="this.form.submit()" style="padding:10px 12px; border-radius:8px; border:1px solid #d0d7de; background:#fff; cursor:pointer;">
-                <option value="10" <?= $limit == 10 ? 'selected' : '' ?>>10 per page</option>
-                <option value="20" <?= $limit == 20 ? 'selected' : '' ?>>20 per page</option>
-                <option value="50" <?= $limit == 50 ? 'selected' : '' ?>>50 per page</option>
-                <option value="100" <?= $limit == 100 ? 'selected' : '' ?>>100 per page</option>
-              </select>
-              <form method="get" id="limitForm" style="display:none;">
-                <input type="hidden" name="limit" id="limitInput">
-              </form>
-            </div>
-            <button class="btn" style="padding:10px 12px; border:1px solid #d0d7de; background:#fff; cursor:pointer;" title="More options">
+          </form>
+
+          <div class="sales-toolbar-actions">
+            <button class="btn ghost-btn" id="filterBtn" type="button">
+              <i class="fas fa-filter"></i>
+              Filters
+            </button>
+            <select id="limitSelect" class="page-size" aria-label="Items per page">
+              <option value="10" <?= $limit == 10 ? 'selected' : '' ?>>10 per page</option>
+              <option value="20" <?= $limit == 20 ? 'selected' : '' ?>>20 per page</option>
+              <option value="50" <?= $limit == 50 ? 'selected' : '' ?>>50 per page</option>
+              <option value="100" <?= $limit == 100 ? 'selected' : '' ?>>100 per page</option>
+            </select>
+            <button class="btn ghost-btn" type="button" title="More options">
               <i class="fas fa-ellipsis-v"></i>
             </button>
           </div>
         </div>
 
-        <!-- Filter Panel (Hidden by default) -->
-        <div id="filterPanel" style="display:none; background:#f9fafb; border:1px solid #e5eef2; padding:16px; border-radius:8px; margin-bottom:18px;">
-          <form method="get" style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end;">
+        <div id="filterPanel" class="sales-filter-panel" aria-hidden="true">
+          <form method="get" class="filter-form">
             <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
             
-            <div style="display:flex; flex-direction:column;">
-              <label style="font-weight:600; font-size:13px; margin-bottom:6px;">Status</label>
-              <select name="status" style="padding:8px 10px; border-radius:6px; border:1px solid #d0d7de; background:#fff;">
+            <div class="filter-field">
+              <label>Status</label>
+              <select name="status">
                 <option value="all">All Status</option>
                 <option value="pending" <?= $status_filter == 'pending' ? 'selected' : '' ?>>Pending</option>
                 <option value="paid" <?= $status_filter == 'paid' ? 'selected' : '' ?>>Paid</option>
@@ -183,45 +178,43 @@ if ($stmt) {
               </select>
             </div>
 
-            <div style="display:flex; flex-direction:column;">
-              <label style="font-weight:600; font-size:13px; margin-bottom:6px;">From Date</label>
-              <input type="date" name="date_from" value="<?= htmlspecialchars($date_from) ?>" style="padding:8px 10px; border-radius:6px; border:1px solid #d0d7de; background:#fff;">
+            <div class="filter-field">
+              <label>From Date</label>
+              <input type="date" name="date_from" value="<?= htmlspecialchars($date_from) ?>">
             </div>
 
-            <div style="display:flex; flex-direction:column;">
-              <label style="font-weight:600; font-size:13px; margin-bottom:6px;">To Date</label>
-              <input type="date" name="date_to" value="<?= htmlspecialchars($date_to) ?>" style="padding:8px 10px; border-radius:6px; border:1px solid #d0d7de; background:#fff;">
+            <div class="filter-field">
+              <label>To Date</label>
+              <input type="date" name="date_to" value="<?= htmlspecialchars($date_to) ?>">
             </div>
 
-            <button class="btn btn-primary" type="submit" style="padding:8px 16px;">Apply Filters</button>
-            <a href="sales_history.php" class="btn" style="padding:8px 16px; border:1px solid #d0d7de; background:#fff; text-decoration:none;">Clear</a>
+            <button class="btn btn-primary" type="submit">Apply Filters</button>
+            <a href="sales_history.php" class="btn ghost-btn">Clear</a>
           </form>
         </div>
 
-        <!-- Results Summary -->
-        <div style="margin-bottom:12px; color:#666; font-size:14px;">
+        <div class="sales-summary">
           Showing <?= $total == 0 ? 0 : ($offset + 1) ?> to <?= min($offset + $limit, $total) ?> of <?= $total ?> sales
         </div>
 
-        <!-- Sales Table -->
-        <div style="background:#fff; border:1px solid #eef2f3; border-radius:8px; overflow:hidden;">
+        <div class="sales-table-wrapper">
           <?php if ($result && $result->num_rows > 0): ?>
-            <table style="width:100%; border-collapse:collapse;">
+            <table class="sales-history-table">
               <thead>
-                <tr style="border-bottom:1px solid #f1f4f6; background:#f9fafb;">
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;"><input type="checkbox" style="cursor:pointer;"></th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">Sale #</th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">
-                    <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" style="display:flex; align-items:center; gap:6px; text-decoration:none; color:#072a36;">
-                      Date <i class="fas fa-sort-down" style="font-size:12px;"></i>
+                <tr>
+                  <th class="checkbox-col"><input type="checkbox" aria-label="Select all"></th>
+                  <th>Sale #</th>
+                  <th>
+                    <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="sortable">
+                      Date <i class="fas fa-sort-down"></i>
                     </a>
                   </th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">Customer</th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">Seller</th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">Amount</th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">Status</th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">Payment</th>
-                  <th style="padding:12px; text-align:left; font-weight:600; color:#072a36;">Actions</th>
+                  <th>Customer</th>
+                  <th>Seller</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Payment</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -233,40 +226,46 @@ if ($stmt) {
                       $itemsText .= htmlspecialchars($item['name'] ?? 'Unknown') . ' × ' . intval($item['qty'] ?? 1) . '<br>';
                     }
                   }
+                  $statusSlug = strtolower($row['status']);
                 ?>
-                <tr style="border-bottom:1px solid #f6f8f9;">
-                  <td style="padding:12px; text-align:center;"><input type="checkbox" style="cursor:pointer;"></td>
-                  <td style="padding:12px; font-weight:600; color:#0b6ef0;">#<?= intval($row['id']) ?></td>
-                  <td style="padding:12px;"><?= date('M d, Y', strtotime($row['created_at'])) ?></td>
-                  <td style="padding:12px; color:#666;">Customer</td>
-                  <td style="padding:12px; color:#666;">Admin</td>
-                  <td style="padding:12px; font-weight:600;">BDT <?= number_format(floatval($row['total']), 2) ?></td>
-                  <td style="padding:12px;">
-                    <span style="display:inline-block; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:600; 
-                      <?php 
-                        if ($row['status'] === 'paid') echo 'background:#d4edda; color:#155724;';
-                        elseif ($row['status'] === 'pending') echo 'background:#fff3cd; color:#856404;';
-                        else echo 'background:#f8d7da; color:#721c24;';
-                      ?>
-                    ">
+                <tr>
+                  <td class="checkbox-col"><input type="checkbox" aria-label="Select sale #<?= intval($row['id']) ?>"></td>
+                  <td class="sale-id">#<?= intval($row['id']) ?></td>
+                  <td><?= date('M d, Y', strtotime($row['created_at'])) ?></td>
+                  <td class="muted">Customer</td>
+                  <td class="muted">Admin</td>
+                  <td class="sale-amount">BDT <?= number_format(floatval($row['total']), 2) ?></td>
+                  <td>
+                    <span class="status-pill status-pill--<?= htmlspecialchars($statusSlug); ?>">
                       <?= ucfirst(htmlspecialchars($row['status'])) ?>
                     </span>
                   </td>
-                  <td style="padding:12px; color:#666;">
-                    <?= $row['status'] === 'paid' ? '<i class="fas fa-check-circle" style="color:#28a745;"></i> Paid' : '<i class="fas fa-clock" style="color:#ffc107;"></i> Pending' ?>
+                  <td>
+                    <div class="payment-status <?= $row['status'] === 'paid' ? 'is-paid' : 'is-pending'; ?>">
+                      <?php if ($row['status'] === 'paid'): ?>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Paid</span>
+                      <?php else: ?>
+                        <i class="fas fa-clock"></i>
+                        <span>Pending</span>
+                      <?php endif; ?>
+                    </div>
                   </td>
-                  <td style="padding:12px;">
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn viewBtn" data-id="<?= $row['id'] ?>" data-items="<?= htmlspecialchars(json_encode($items)) ?>" data-total="<?= $row['total'] ?>" style="background:#0b6ef0; color:#fff; padding:6px 10px; border-radius:6px; border:none; cursor:pointer; font-size:12px;">
-                        <i class="fas fa-eye"></i> View
+                  <td>
+                    <div class="sales-actions">
+                      <button class="sales-action-btn view-btn" data-id="<?= $row['id'] ?>" data-items="<?= htmlspecialchars(json_encode($items)) ?>" data-total="<?= $row['total'] ?>">
+                        <i class="fas fa-eye"></i>
+                        View
                       </button>
                       <?php if ($row['status'] !== 'paid'): ?>
-                        <a href="?pay=<?= $row['id'] ?>&page=<?= $page ?>&limit=<?= $limit ?>" class="btn" style="background:#0b6ef0; color:#fff; padding:6px 10px; border-radius:6px; text-decoration:none; font-size:12px;">
-                          <i class="fas fa-check"></i> Pay
+                        <a href="?pay=<?= $row['id'] ?>&page=<?= $page ?>&limit=<?= $limit ?>" class="sales-action-btn pay-btn">
+                          <i class="fas fa-check"></i>
+                          Pay
                         </a>
                       <?php endif; ?>
-                      <button class="btn deleteBtn" data-id="<?= $row['id'] ?>" style="background:#0d5fd5; color:#fff; padding:6px 10px; border-radius:6px; border:none; cursor:pointer; font-size:12px;">
-                        <i class="fas fa-trash"></i> Delete
+                      <button class="sales-action-btn delete-btn" data-id="<?= $row['id'] ?>">
+                        <i class="fas fa-trash"></i>
+                        Delete
                       </button>
                     </div>
                   </td>
@@ -275,33 +274,28 @@ if ($stmt) {
               </tbody>
             </table>
           <?php else: ?>
-            <div style="padding:60px 20px; text-align:center;">
-              <i class="fas fa-calculator" style="font-size:48px; color:#ccc; margin-bottom:16px; display:block;"></i>
-              <div style="font-size:18px; font-weight:600; margin-bottom:8px;">No Sales Found</div>
-              <div style="color:#666;">There are no sales matching your criteria.</div>
+            <div class="sales-empty">
+              <i class="fas fa-calculator"></i>
+              <h3>No Sales Found</h3>
+              <p>There are no sales matching your criteria.</p>
             </div>
           <?php endif; ?>
         </div>
 
-        <!-- Pagination -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-          <div style="color:#666; font-size:14px;">
-            Page <?= $page ?> of <?= max(1, $totalPages) ?>
-          </div>
-          <div style="display:flex; gap:8px;">
-            <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == 1 ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+        <div class="sales-pagination">
+          <div class="table-meta">Page <?= $page ?> of <?= max(1, $totalPages) ?></div>
+          <div class="pagination">
+            <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="page-btn<?= $page == 1 ? ' disabled' : '' ?>" aria-label="First page">
               <i class="fas fa-step-backward"></i>
             </a>
-            <a href="?page=<?= max(1, $page - 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == 1 ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+            <a href="?page=<?= max(1, $page - 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="page-btn<?= $page == 1 ? ' disabled' : '' ?>" aria-label="Previous page">
               <i class="fas fa-chevron-left"></i>
             </a>
-            <div style="padding:8px 16px; border-radius:6px; background:#f0f0f0; color:#333; font-weight:600;">
-              <?= $page ?> of <?= max(1, $totalPages) ?>
-            </div>
-            <a href="?page=<?= min($totalPages, $page + 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == $totalPages ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+            <div class="page-indicator"><?= $page ?> of <?= max(1, $totalPages) ?></div>
+            <a href="?page=<?= min($totalPages, $page + 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="page-btn<?= $page == $totalPages ? ' disabled' : '' ?>" aria-label="Next page">
               <i class="fas fa-chevron-right"></i>
             </a>
-            <a href="?page=<?= $totalPages ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == $totalPages ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+            <a href="?page=<?= $totalPages ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="page-btn<?= $page == $totalPages ? ' disabled' : '' ?>" aria-label="Last page">
               <i class="fas fa-step-forward"></i>
             </a>
           </div>
@@ -310,42 +304,58 @@ if ($stmt) {
     </main>
   </div>
 
-  <!-- View Modal -->
-  <div id="viewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
-    <div style="background:#fff; border-radius:12px; padding:24px; max-width:500px; width:90%; max-height:80vh; overflow:auto;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h3 style="margin:0; font-size:18px;">Sale Details</h3>
-        <button id="closeModal" style="background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
-      </div>
+  <div id="viewModal" class="sales-modal" aria-hidden="true">
+    <div class="sales-modal-card" role="dialog" aria-modal="true">
+      <header>
+        <h3>Sale Details</h3>
+        <button id="closeModal" class="modal-close" aria-label="Close">&times;</button>
+      </header>
       <div id="modalContent"></div>
     </div>
   </div>
 
-  <!-- Delete Confirmation Modal -->
-  <div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
-    <div style="background:#fff; border-radius:12px; padding:24px; max-width:400px; width:90%;">
-      <h3 style="margin-top:0;">Delete Sale</h3>
-      <p style="color:#666;">Are you sure you want to delete this sale? This action cannot be undone.</p>
-      <div style="display:flex; gap:8px; justify-content:flex-end;">
-        <button id="cancelDelete" class="btn" style="padding:10px 16px; border:1px solid #d0d7de; background:#fff; cursor:pointer;">Cancel</button>
-        <form method="post" style="display:inline;">
+  <div id="deleteModal" class="sales-modal" aria-hidden="true">
+    <div class="sales-modal-card" role="dialog" aria-modal="true">
+      <header>
+        <h3>Delete Sale</h3>
+      </header>
+      <p>Are you sure you want to delete this sale? This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button id="cancelDelete" class="btn ghost-btn">Cancel</button>
+        <form method="post" class="delete-form">
           <input type="hidden" name="action" value="delete">
           <input type="hidden" name="delete_id" id="deleteId">
-          <button type="submit" class="btn" style="padding:10px 16px; background:#dc3545; color:#fff; cursor:pointer;">Delete</button>
+          <button type="submit" class="btn danger-btn">Delete</button>
         </form>
       </div>
     </div>
   </div>
 
   <script>
-    // Filter toggle
-    document.getElementById('filterBtn').addEventListener('click', function() {
-      const panel = document.getElementById('filterPanel');
-      panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
-    });
+    const filterBtn = document.getElementById('filterBtn');
+    const filterPanel = document.getElementById('filterPanel');
+    const viewModal = document.getElementById('viewModal');
+    const deleteModal = document.getElementById('deleteModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+    const limitSelect = document.getElementById('limitSelect');
 
-    // View details
-    document.querySelectorAll('.viewBtn').forEach(btn => {
+    if (filterBtn && filterPanel) {
+      filterBtn.addEventListener('click', function () {
+        const open = filterPanel.classList.toggle('open');
+        filterPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
+    }
+
+    if (limitSelect) {
+      limitSelect.addEventListener('change', function(){
+        const url = new URL(window.location.href);
+        url.searchParams.set('limit', this.value);
+        window.location.href = url.toString();
+      });
+    }
+
+    document.querySelectorAll('.view-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const id = this.dataset.id;
         const items = JSON.parse(this.dataset.items);
@@ -358,45 +368,55 @@ if ($stmt) {
         itemsHtml += '</ul>';
         
         document.getElementById('modalContent').innerHTML = `
-          <div style="margin-bottom:12px;">
-            <label style="font-weight:600; color:#666;">Sale ID</label>
+          <div class="modal-row">
+            <label>Sale ID</label>
             <div>#${id}</div>
           </div>
-          <div style="margin-bottom:12px;">
-            <label style="font-weight:600; color:#666;">Items</label>
+          <div class="modal-row">
+            <label>Items</label>
             ${itemsHtml}
           </div>
-          <div style="margin-bottom:12px;">
-            <label style="font-weight:600; color:#666;">Total</label>
+          <div class="modal-row">
+            <label>Total</label>
             <div>BDT ${parseFloat(total).toFixed(2)}</div>
           </div>
         `;
-        document.getElementById('viewModal').style.display = 'flex';
+        viewModal.classList.add('open');
+        viewModal.setAttribute('aria-hidden','false');
       });
     });
 
-    document.getElementById('closeModal').addEventListener('click', function() {
-      document.getElementById('viewModal').style.display = 'none';
-    });
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', function(){
+        viewModal.classList.remove('open');
+        viewModal.setAttribute('aria-hidden','true');
+      });
+    }
 
-    // Delete confirmation
-    document.querySelectorAll('.deleteBtn').forEach(btn => {
+    document.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         document.getElementById('deleteId').value = this.dataset.id;
-        document.getElementById('deleteModal').style.display = 'flex';
+        deleteModal.classList.add('open');
+        deleteModal.setAttribute('aria-hidden','false');
       });
     });
 
-    document.getElementById('cancelDelete').addEventListener('click', function() {
-      document.getElementById('deleteModal').style.display = 'none';
-    });
+    if (cancelDeleteBtn) {
+      cancelDeleteBtn.addEventListener('click', function(){
+        deleteModal.classList.remove('open');
+        deleteModal.setAttribute('aria-hidden','true');
+      });
+    }
 
-    // Close modals when clicking outside
     window.addEventListener('click', function(e) {
-      const viewModal = document.getElementById('viewModal');
-      const deleteModal = document.getElementById('deleteModal');
-      if (e.target === viewModal) viewModal.style.display = 'none';
-      if (e.target === deleteModal) deleteModal.style.display = 'none';
+      if (e.target === viewModal) {
+        viewModal.classList.remove('open');
+        viewModal.setAttribute('aria-hidden','true');
+      }
+      if (e.target === deleteModal) {
+        deleteModal.classList.remove('open');
+        deleteModal.setAttribute('aria-hidden','true');
+      }
     });
   </script>
 </body>

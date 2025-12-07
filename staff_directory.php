@@ -387,11 +387,13 @@ if ($partial) {
     <?php echo $mainContent; ?>
   </div>
 
+  <?php if (!function_exists('should_show_footer') || should_show_footer()): ?>
   <footer class="site-footer">
     <div class="footer">
       <p>&copy; 2025 PharmaSync Ltd. All rights reserved.</p>
     </div>
   </footer>
+  <?php endif; ?>
 
 </body>
 </html>

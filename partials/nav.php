@@ -13,7 +13,6 @@ $navUserRole = $user_role ?? ($_SESSION['user_role'] ?? 'Admin');
       <button id="themeToggle" class="icon-btn" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
       <button id="refreshBtn" class="icon-btn" aria-label="Refresh"><i class="fas fa-sync-alt"></i></button>
       <button id="notifBtn" class="icon-btn" aria-label="Notifications"><i class="fas fa-bell"></i></button>
-      <a href="#" class="icon-btn" aria-label="Settings"><i class="fas fa-cog"></i></a>
     </div>
     <div class="profile">
       <button id="profileBtn" class="admin-pill" aria-haspopup="true" aria-expanded="false">
