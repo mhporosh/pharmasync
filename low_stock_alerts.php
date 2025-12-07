@@ -15,9 +15,9 @@ $result = $conn->query($sql);
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="style.css?v=20251205">
   <link rel="stylesheet" href="responsive.css?v=20251205">
-  <link rel="stylesheet" href="dashboard.css?v=20251205">
+  <link rel="stylesheet" href="dashboard.css?v=20251207">
   <script src="https://kit.fontawesome.com/d3e9fb9ce3.js" crossorigin="anonymous"></script>
-  <script src="script.js?v=20251205" defer></script>
+  <script src="script.js?v=20251207" defer></script>
 </head>
 <body>
   <?php require __DIR__ . '/partials/nav.php'; ?>
@@ -38,7 +38,7 @@ $result = $conn->query($sql);
             <th>Expiry Date</th>
           </tr>
           <?php if ($result && $result->num_rows > 0): while($row = $result->fetch_assoc()): ?>
-          <tr class="low-stock">
+          <tr>
             <td><?= htmlspecialchars($row['medicine_name']) ?></td>
             <td><?= htmlspecialchars($row['generic_name']) ?></td>
             <td><?= htmlspecialchars($row['unit_size']) ?></td>

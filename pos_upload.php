@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/partials/auth.php';
-session_start();
 $activeMenu = 'sales';
 $activePage = 'pos';
 $message = '';
@@ -32,8 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['prescription'])) {
 <head>
   <meta charset="UTF-8">
   <title>Upload Prescription • PharmaSync</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="style.css?v=20251205">
-  <link rel="stylesheet" href="dashboard.css?v=20251205">
+  <link rel="stylesheet" href="responsive.css?v=20251205">
+  <link rel="stylesheet" href="dashboard.css?v=20251207">
+  <script src="https://kit.fontawesome.com/d3e9fb9ce3.js" crossorigin="anonymous"></script>
+  <script src="script.js?v=20251207" defer></script>
 </head>
 <body>
   <?php require __DIR__ . '/partials/nav.php'; ?>

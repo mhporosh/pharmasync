@@ -14,9 +14,9 @@ $conn->close();
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="style.css?v=20251205">
   <link rel="stylesheet" href="responsive.css?v=20251205">
-  <link rel="stylesheet" href="dashboard.css?v=20251205">
+  <link rel="stylesheet" href="dashboard.css?v=20251207">
   <script src="https://kit.fontawesome.com/d3e9fb9ce3.js" crossorigin="anonymous"></script>
-  <script src="script.js?v=20251205" defer></script>
+  <script src="script.js?v=20251207" defer></script>
 </head>
 
 <body>

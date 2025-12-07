@@ -119,9 +119,9 @@ if ($stmt) {
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="style.css?v=20251205">
   <link rel="stylesheet" href="responsive.css?v=20251205">
-  <link rel="stylesheet" href="dashboard.css?v=20251205">
+  <link rel="stylesheet" href="dashboard.css?v=20251207">
   <script src="https://kit.fontawesome.com/d3e9fb9ce3.js" crossorigin="anonymous"></script>
-  <script src="script.js?v=20251205" defer></script>
+  <script src="script.js?v=20251207" defer></script>
 </head>
 <body>
   <?php require __DIR__ . '/partials/nav.php'; ?>
@@ -261,11 +261,11 @@ if ($stmt) {
                         <i class="fas fa-eye"></i> View
                       </button>
                       <?php if ($row['status'] !== 'paid'): ?>
-                        <a href="?pay=<?= $row['id'] ?>&page=<?= $page ?>&limit=<?= $limit ?>" class="btn" style="background:#28a745; color:#fff; padding:6px 10px; border-radius:6px; text-decoration:none; font-size:12px;">
+                        <a href="?pay=<?= $row['id'] ?>&page=<?= $page ?>&limit=<?= $limit ?>" class="btn" style="background:#0b6ef0; color:#fff; padding:6px 10px; border-radius:6px; text-decoration:none; font-size:12px;">
                           <i class="fas fa-check"></i> Pay
                         </a>
                       <?php endif; ?>
-                      <button class="btn deleteBtn" data-id="<?= $row['id'] ?>" style="background:#dc3545; color:#fff; padding:6px 10px; border-radius:6px; border:none; cursor:pointer; font-size:12px;">
+                      <button class="btn deleteBtn" data-id="<?= $row['id'] ?>" style="background:#0d5fd5; color:#fff; padding:6px 10px; border-radius:6px; border:none; cursor:pointer; font-size:12px;">
                         <i class="fas fa-trash"></i> Delete
                       </button>
                     </div>
@@ -289,19 +289,19 @@ if ($stmt) {
             Page <?= $page ?> of <?= max(1, $totalPages) ?>
           </div>
           <div style="display:flex; gap:8px;">
-            <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == 1 ? 'background:#ccc; cursor:not-allowed;' : 'background:#a8d5ba; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+            <a href="?page=1&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == 1 ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
               <i class="fas fa-step-backward"></i>
             </a>
-            <a href="?page=<?= max(1, $page - 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == 1 ? 'background:#ccc; cursor:not-allowed;' : 'background:#a8d5ba; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+            <a href="?page=<?= max(1, $page - 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == 1 ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
               <i class="fas fa-chevron-left"></i>
             </a>
             <div style="padding:8px 16px; border-radius:6px; background:#f0f0f0; color:#333; font-weight:600;">
               <?= $page ?> of <?= max(1, $totalPages) ?>
             </div>
-            <a href="?page=<?= min($totalPages, $page + 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == $totalPages ? 'background:#ccc; cursor:not-allowed;' : 'background:#1b7e2a; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+            <a href="?page=<?= min($totalPages, $page + 1) ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == $totalPages ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
               <i class="fas fa-chevron-right"></i>
             </a>
-            <a href="?page=<?= $totalPages ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == $totalPages ? 'background:#ccc; cursor:not-allowed;' : 'background:#1b7e2a; cursor:pointer;' ?> text-decoration:none; color:#fff;">
+            <a href="?page=<?= $totalPages ?>&limit=<?= $limit ?>&search=<?= urlencode($search) ?>&status=<?= $status_filter ?>&date_from=<?= $date_from ?>&date_to=<?= $date_to ?>" class="btn" style="padding:8px 12px; border-radius:6px; <?= $page == $totalPages ? 'background:#9ca3af; cursor:not-allowed;' : 'background:#0b6ef0; cursor:pointer;' ?> text-decoration:none; color:#fff;">
               <i class="fas fa-step-forward"></i>
             </a>
           </div>
