@@ -459,7 +459,7 @@ body.dark .dd-item:hover { background:#111827; }
 .staff-info-grid .info-label { color: #6b837c; font-weight:700; font-size:13px; text-align:left; }
 .staff-info-grid .info-value { color: #072A36; font-size:13px; }
 .staff-info-grid .info-value .badge { margin-left:0; }
-.badge { display:inline-flex; align-items:center; justify-content:center; padding:8px 18px; border-radius:10px; font-weight:700; font-size:14px; color:#fff; text-transform:uppercase; letter-spacing:0.4px; box-shadow:none; white-space:nowrap; line-height:1.2; box-sizing:border-box; min-height:36px; min-width:100px; vertical-align:middle; }
+.badge { display:inline-flex; align-items:center; justify-content:center; padding:8px 18px; border-radius:10px; font-weight:700; font-size:14px; color:#0b5ed7; text-transform:uppercase; letter-spacing:0.4px; box-shadow:none; white-space:nowrap; line-height:1.2; box-sizing:border-box; min-height:36px; min-width:100px; vertical-align:middle; }
 .badge.role.admin { background:linear-gradient(180deg,#e4edff,#f7faff); color:#0b5ed7; border:1px solid rgba(13,110,253,0.18); box-shadow:none; }
 /* Fallback role badge styling so unknown roles remain visible */
 .badge.role { background: linear-gradient(180deg,#f7f9f9,#ffffff); color:#072A36; border:1px solid rgba(7,42,54,0.06); box-shadow: none; }
