@@ -47,7 +47,7 @@ $staffOpen = $menuKey === 'staff';
 
     <button class="menu-item has-sub<?= $customersOpen ? ' active' : '' ?>" data-menu="customers" data-target="customers-sub" aria-expanded="<?= $customersOpen ? 'true' : 'false' ?>"><span><i class="fas fa-user-friends"></i></span><span>Customers</span><i class="fas fa-chevron-down chevron"></i></button>
     <div id="customers-sub" class="submenu<?= $customersOpen ? ' show' : '' ?>">
-      <a href="#" class="submenu-item"><span><i class="fas fa-address-book"></i></span><span>Customers List</span></a>
+      <a href="customers.php" class="submenu-item<?= $pageKey === 'customers' ? ' active' : '' ?>"><span><i class="fas fa-address-book"></i></span><span>Customers List</span></a>
     </div>
 
     <button class="menu-item has-sub<?= $staffOpen ? ' active' : '' ?>" data-menu="staff" data-target="staff-sub" aria-expanded="<?= $staffOpen ? 'true' : 'false' ?>"><span><i class="fas fa-users-cog"></i></span><span>Staff</span><i class="fas fa-chevron-down chevron"></i></button>
