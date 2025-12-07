@@ -1,4 +1,4 @@
--- SQL script to create the 'staff' table
+-- SQL script to create the 'staff' table if it does not already exist
 
 CREATE TABLE IF NOT EXISTS staff (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
