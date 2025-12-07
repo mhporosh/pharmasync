@@ -202,6 +202,17 @@ body.dark .mi-yellow{color:#fde68a;background:rgba(253,230,138,0.15);}
   box-shadow: 0 8px 22px rgba(11, 18, 20, 0.04);
 }
 
+.menu-item.active {
+  background: #0b6ef0;
+  color: #fff;
+  border-color: #0b6ef0;
+}
+
+.menu-item.active i,
+.menu-item.active .chevron {
+  color: #fff;
+}
+
 .menu-item .chevron {
   margin-left: auto;
   color: #667;
@@ -237,6 +248,14 @@ body.dark .mi-yellow{color:#fde68a;background:rgba(253,230,138,0.15);}
   text-decoration: none;
   background: #fff;
   border: 1px dashed #e5eef2;
+}
+
+.submenu-item.active {
+  border-style: solid;
+  border-color: #0b6ef0;
+  background: #edf3ff;
+  color: #0c1a3a;
+  font-weight: 600;
 }
 
 .upgrade {
