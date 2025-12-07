@@ -236,3 +236,58 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 	}
 });
+
+// Staff page: tabs and Add Staff modal
+document.addEventListener('DOMContentLoaded', function(){
+	// Tabs
+	const tabs = document.querySelectorAll('.staff-tabs .tab');
+	const panels = document.querySelectorAll('.tab-panel');
+	tabs.forEach(tab => {
+		tab.addEventListener('click', function(){
+			const target = tab.getAttribute('data-tab');
+			tabs.forEach(t=>t.classList.remove('active'));
+			panels.forEach(p=>p.classList.remove('active'));
+			tab.classList.add('active');
+			const panel = document.getElementById(target);
+			if (panel) panel.classList.add('active');
+		});
+	});
+
+	// Modal handlers
+	const addBtn = document.getElementById('addStaffBtn');
+	const modal = document.getElementById('addStaffModal');
+	const modalCloses = document.querySelectorAll('.modal-close');
+	const addForm = document.getElementById('addStaffForm');
+
+	if (addBtn && modal) {
+		addBtn.addEventListener('click', function(){
+			modal.setAttribute('aria-hidden','false');
+		});
+		modalCloses.forEach(btn => btn.addEventListener('click', function(){ modal.setAttribute('aria-hidden','true'); }));
+		modal.addEventListener('click', function(e){ if (e.target === modal) modal.setAttribute('aria-hidden','true'); });
+	}
+
+	if (addForm) {
+		addForm.addEventListener('submit', function(e){
+			e.preventDefault();
+			const formData = new FormData(addForm);
+			fetch('handlers/add_staff.php', {
+				method: 'POST',
+				body: formData,
+				credentials: 'same-origin'
+			}).then(r => r.json()).then(data => {
+				if (data && data.success) {
+					modal.setAttribute('aria-hidden','true');
+					alert('Staff account created. Temporary password: ' + (data.password || '(hidden)'));
+					addForm.reset();
+					// TODO: refresh staff list UI via XHR or page reload
+				} else {
+					alert('Error: ' + (data.error || 'Unknown error'));
+				}
+			}).catch(err => {
+				console.error(err);
+				alert('Request failed. See console for details.');
+			});
+		});
+	}
+});

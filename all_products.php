@@ -38,6 +38,56 @@ if ($search !== '') {
   <div class="layout">
     <?php require __DIR__ . '/partials/sidebar.php'; ?>
     <main class="dash-wrap">
+            <!-- Dashboard Summary Cards -->
+            <?php
+              // Calculate summary values
+              $totalItems = 0;
+              $expiringSoon = 0;
+              $lowStock = 0;
+              $totalValue = 0;
+              $today = date('Y-m-d');
+              $soon = date('Y-m-d', strtotime('+30 days'));
+              if ($result && $result->num_rows > 0) {
+                $result->data_seek(0);
+                while($row = $result->fetch_assoc()) {
+                  $totalItems++;
+                  if ($row['expiry_date'] <= $soon && $row['expiry_date'] >= $today) $expiringSoon++;
+                  if ($row['stock'] <= 10) $lowStock++;
+                  $totalValue += floatval($row['price']) * intval($row['stock']);
+                }
+                $result->data_seek(0); // Reset pointer for table
+              }
+            ?>
+            <div class="dashboard-cards" style="display:flex; gap:18px; margin-bottom:22px;">
+              <div class="card" style="border-radius:12px; box-shadow:0 2px 8px #0001; padding:18px 28px; min-width:170px; display:flex; flex-direction:column; justify-content:center;">
+                <div style="font-weight:600; color:var(--accent-2); font-size:15px;">Total Items</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+                  <span style="color:var(--accent-2); font-size:22px; font-weight:600;"><?= $totalItems ?></span>
+                  <i class="fas fa-cube" style="color:var(--accent-2); font-size:22px;"></i>
+                </div>
+              </div>
+              <div class="card" style="border-radius:12px; box-shadow:0 2px 8px #0001; padding:18px 28px; min-width:170px; display:flex; flex-direction:column; justify-content:center;">
+                <div style="font-weight:600; color:var(--accent-2); font-size:15px;">Expiring Soon</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+                  <span style="color:var(--accent-2); font-size:22px; font-weight:600;"><?= $expiringSoon ?></span>
+                  <i class="fas fa-clock" style="color:var(--accent-2); font-size:22px;"></i>
+                </div>
+              </div>
+              <div class="card" style="border-radius:12px; box-shadow:0 2px 8px #0001; padding:18px 28px; min-width:170px; display:flex; flex-direction:column; justify-content:center;">
+                <div style="font-weight:600; color:var(--accent-2); font-size:15px;">Low Stock</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+                  <span style="color:var(--accent-2); font-size:22px; font-weight:600;"><?= $lowStock ?></span>
+                  <i class="fas fa-exclamation-triangle" style="color:var(--accent-2); font-size:22px;"></i>
+                </div>
+              </div>
+              <div class="card" style="border-radius:12px; box-shadow:0 2px 8px #0001; padding:18px 28px; min-width:170px; display:flex; flex-direction:column; justify-content:center;">
+                <div style="font-weight:600; color:var(--accent-2); font-size:15px;">Total Value</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+                  <span style="color:var(--accent-2); font-size:22px; font-weight:600;">BDT <?= number_format($totalValue, 0) ?></span>
+                  <i class="fas fa-money-bill-wave" style="color:var(--accent-2); font-size:22px;"></i>
+                </div>
+              </div>
+            </div>
       <div class="dash-header">
         <div class="dash-title">All Products</div>
       </div>

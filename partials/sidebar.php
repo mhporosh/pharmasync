@@ -25,9 +25,9 @@ $staffOpen = $menuKey === 'staff';
 
     <button class="menu-item has-sub<?= $salesOpen ? ' active' : '' ?>" data-target="sales-sub" aria-expanded="<?= $salesOpen ? 'true' : 'false' ?>"><span><i class="fas fa-dollar-sign"></i></span><span>Sales</span><i class="fas fa-chevron-down chevron"></i></button>
     <div id="sales-sub" class="submenu<?= $salesOpen ? ' show' : '' ?>">
-      <a href="#" class="submenu-item"><span><i class="fas fa-cash-register"></i></span><span>Point of Sale</span></a>
-      <a href="#" class="submenu-item"><span><i class="fas fa-chart-bar"></i></span><span>Sales Overview</span></a>
-      <a href="#" class="submenu-item"><span><i class="fas fa-history"></i></span><span>Sales History</span></a>
+      <a href="pos.php" class="submenu-item<?= $pageKey === 'pos' ? ' active' : '' ?>"><span><i class="fas fa-cash-register"></i></span><span>Point of Sale</span></a>
+      <a href="sales_overview.php" class="submenu-item<?= $pageKey === 'sales_overview' ? ' active' : '' ?>"><span><i class="fas fa-chart-bar"></i></span><span>Sales Overview</span></a>
+      <a href="sales_history.php" class="submenu-item<?= $pageKey === 'sales_history' ? ' active' : '' ?>"><span><i class="fas fa-history"></i></span><span>Sales History</span></a>
     </div>
 
     <button class="menu-item has-sub<?= $inventoryOpen ? ' active' : '' ?>" data-target="inventory-sub" aria-expanded="<?= $inventoryOpen ? 'true' : 'false' ?>"><span><i class="fas fa-boxes"></i></span><span>Inventory</span><i class="fas fa-chevron-down chevron"></i></button>
@@ -52,8 +52,8 @@ $staffOpen = $menuKey === 'staff';
 
     <button class="menu-item has-sub<?= $staffOpen ? ' active' : '' ?>" data-target="staff-sub" aria-expanded="<?= $staffOpen ? 'true' : 'false' ?>"><span><i class="fas fa-users-cog"></i></span><span>Staff</span><i class="fas fa-chevron-down chevron"></i></button>
     <div id="staff-sub" class="submenu<?= $staffOpen ? ' show' : '' ?>">
-      <a href="#" class="submenu-item"><span><i class="fas fa-id-badge"></i></span><span>Staff Directory</span></a>
-      <a href="#" class="submenu-item"><span><i class="fas fa-wave-square"></i></span><span>Activity Logs</span></a>
+      <a href="staff_directory.php" class="submenu-item<?= $pageKey === 'staff_directory' ? ' active' : '' ?>"><span><i class="fas fa-id-badge"></i></span><span>Staff Directory</span></a>
+      <a href="activity_logs.php" class="submenu-item<?= $pageKey === 'activity_logs' ? ' active' : '' ?>"><span><i class="fas fa-wave-square"></i></span><span>Activity Logs</span></a>
     </div>
 
     <a class="menu-item<?= $menuKey === 'settings' ? ' active' : '' ?>" href="#"><span><i class="fas fa-cog"></i></span><span>Settings</span></a>
