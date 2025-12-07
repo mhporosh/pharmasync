@@ -24,13 +24,12 @@ if (!empty($errors)) {
     exit;
 }
 
-// Split fullname into first and last
+// Check existing email in `staff` table
 $parts = preg_split('/\s+/', $fullname, 2, PREG_SPLIT_NO_EMPTY);
 $first = $parts[0] ?? '';
 $last = $parts[1] ?? '';
 
-// Check existing email
-$check = $conn->prepare('SELECT id FROM users WHERE email = ? LIMIT 1');
+$check = $conn->prepare('SELECT id FROM staff WHERE email = ? LIMIT 1');
 if (!$check) {
     echo json_encode(['success' => false, 'error' => 'Server error (prepare).']);
     exit;
@@ -44,30 +43,21 @@ if ($check->num_rows > 0) {
     exit;
 }
 $check->close();
-
-// Generate a temporary password for the new account
-try {
-    $tmp = bin2hex(random_bytes(5)); // 10 hex chars
-} catch (Exception $e) {
-    $tmp = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 10);
-}
-$hash = password_hash($tmp, PASSWORD_DEFAULT);
-
-// Insert into `staff` table so newly created staff are shown in `staff_directory.php`.
-$ins = $conn->prepare('INSERT INTO staff (first_name, last_name, fullname, email, role, status, password_hash, joined_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())');
+// Insert into `staff` table (minimal fields only)
+$ins = $conn->prepare('INSERT INTO staff (name, email, role, status, sales_today, products_added, joined_date) VALUES (?, ?, ?, ?, 0, 0, NOW())');
 if (!$ins) {
     echo json_encode(['success' => false, 'error' => 'Server error (insert prepare).']);
     exit;
 }
-$fullname = trim($fullname);
+$name_final = $fullname;
 $role_final = $role ?: 'Staff';
 $status_default = 'ACTIVE';
-$ins->bind_param('sssssss', $first, $last, $fullname, $email, $role_final, $status_default, $hash);
+$ins->bind_param('ssss', $name_final, $email, $role_final, $status_default);
 if ($ins->execute()) {
     $newId = $ins->insert_id;
     $ins->close();
     $conn->close();
-    echo json_encode(['success' => true, 'id' => $newId, 'password' => $tmp]);
+    echo json_encode(['success' => true, 'id' => $newId]);
     exit;
 } else {
     $ins->close();
